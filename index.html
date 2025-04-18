@@ -1,30 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typing Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clavier Magique ✨</title>
+
+  <!-- Google Font enfantine -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome pour les icônes -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Feuille de style -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-    <header>
-        <h1>Typing Test</h1>
-        <label for="mode">Select Mode:</label>
-        <select id="mode">
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-        </select>
-    </header>
+  <div id="score-board">
+    <button>Score</button>
+  </div>
 
-    <main>
-        <p id="word-display"></p>
-        <input type="text" id="input-field" autofocus>
-        <p id="results">Results : </p>
-    </main>
 
-    <script src="script.js"></script>
+  <div class="background">
+    <div class="container">
+      <h1><i class="fas fa-magic"></i> Clavier Magique</h1>
+
+      <label for="username"><i class="fas fa-child"></i> Ton prénom :</label>
+      <input type="text" id="username" placeholder="Ex. Emma" />
+
+      <label for="mode-select"><i class="fas fa-gamepad"></i> Choisis ton niveau :</label>
+      <select id="mode-select">
+        <option value="easy">🌟 Facile</option>
+        <option value="medium">⚙️ Moyen</option>
+        <option value="hard">🔥 Difficile</option>
+      </select>
+
+      <button id="start-btn"><i class="fas fa-play"></i> Commencer</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 
 </html>
