@@ -104,6 +104,8 @@ button:hover {
   padding: 1rem;
   margin-bottom: 1rem;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  max-width: 768px;
+  margin-inline: auto;
 }
 
 .dashboard p {
