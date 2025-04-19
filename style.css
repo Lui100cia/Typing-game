@@ -109,6 +109,13 @@ button#start-btn {
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
+  background-color: #ffffffee;
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  width: 90%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 1s ease;
 }
 
 .dashboard {
@@ -288,6 +295,25 @@ button#start-btn {
   text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
   z-index: 1001;
   animation: countdownAnim 1s ease-in-out infinite;
+}
+
+.progress-bar {
+  height: 30px;
+  width: 80%;
+  max-width: 400px;
+  margin: 30px auto 50px;
+  background: #896aee;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid #4b0082; 
+}
+
+.progress-bar .fill {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to right, #a894f4, #f8a9cb);
+  transition: width 0.3s linear;
 }
 
 @keyframes countdownAnim {

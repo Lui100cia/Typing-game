@@ -10,6 +10,7 @@ const inputField = document.getElementById("input-field");
 const wordDisplay = document.getElementById("word-display");
 const scoreButton = document.querySelector("#score-board button");
 const countdownEl = document.getElementById("countdown");
+const fillBar = document.querySelector(".progress-bar .fill");
 
 const TIMING = 120;
 
@@ -104,6 +105,19 @@ function startCountdown() {
     }
   }, 1000);
 }
+
+function fillBarAnimation() {
+  const fillWidth = (TIMING - parseInt(timeRemaining.textContent)) / TIMING * 100;
+  fillBar.style.width = `${fillWidth}%`;
+  fillBar.style.transition = "width 1s linear";
+}
+inputField.addEventListener("input", fillBarAnimation);
+inputField.addEventListener("focus", () => {
+  fillBar.style.transition = "none";
+  fillBar.style.width = "0%";
+}
+);
+
 
 function resetStats() {
   currentWordIndex = totalTyped = correctTyped = wrongTyped = totalCharsTyped = correctCharsTyped = 0;
