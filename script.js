@@ -12,13 +12,17 @@ const accuracyDisplay = document.getElementById("accuracy");
 
 const inputField = document.getElementById("input-field");
 
-let timer = 60;
+const NUMBER_OF_WORD = 50;
+const TIMING = 120;
+let timer = TIMING;
 let intervalId;
 let currentWordIndex = 0;
 let totalTyped = 0;
 let correctTyped = 0;
+let wrongTyped = 0;
 let totalCharsTyped = 0;
 let correctCharsTyped = 0;
+const wpmList = [];
 
 // ✅ Clique sur "Commencer"
 startBtn.addEventListener("click", () => {
@@ -51,7 +55,7 @@ let generatedWords = [];
 function startGame(level) {
   // Génère 50 mots aléatoires selon le niveau
   generatedWords = [];
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < NUMBER_OF_WORD; i++) {
     const wordList = words[level];
     const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
     generatedWords.push(randomWord);
@@ -80,7 +84,7 @@ function displayWords() {
 }
 
 function startCountdown() {
-  let timeLeft = 60;
+  let timeLeft = TIMING;
   timeRemaining.textContent = timeLeft;
 
   intervalId = setInterval(() => {
@@ -89,7 +93,7 @@ function startCountdown() {
 
     if (timeLeft <= 0) {
       clearInterval(intervalId);
-      endGame(); // À créer plus tard
+      endGame();
     }
   }, 1000);
 }
@@ -107,6 +111,7 @@ inputField.addEventListener("keydown", (e) => {
       correctTyped++;
       wordDisplay.querySelector(`.highlight`).classList.add("correct")
     } else {
+      wrongTyped++;
       wordDisplay.querySelector(`.highlight`).classList.add("wrong")
     }
 
@@ -124,6 +129,12 @@ inputField.addEventListener("keydown", (e) => {
   }
   updateStats();
 
+
+  if (currentWordIndex >= generatedWords.length) {
+    clearInterval(intervalId);
+    endGame();
+    return;
+  }
 });
 
 function updateWordHighlight() {
@@ -138,11 +149,33 @@ function updateWordHighlight() {
 }
 
 function updateStats() {
-  const minutesElapsed = (60 - parseInt(timeRemaining.textContent)) / 60;
+  const minutesElapsed = (TIMING - parseInt(timeRemaining.textContent)) / 60;
   const wpm = totalTyped / minutesElapsed;
+  wpmList.push(wpm)
+  const meanWpm = wpmList.reduce((a, b) => a + b) / wpmList.length;
   const accuracy = (correctCharsTyped / totalCharsTyped) * 100;
 
-  wpmDisplay.textContent = isFinite(wpm) ? Math.round(wpm) : 0;
+  wpmDisplay.textContent = isFinite(meanWpm) ? Math.round(meanWpm) : 0;
   accuracyDisplay.textContent = isFinite(accuracy) ? Math.round(accuracy) : 0;
+}
+
+function endGame() {
+  clearInterval(intervalId);
+  inputField.disabled = true;
+
+  const finalWpm = parseInt(wpmDisplay.textContent);
+  const finalAccuracy = (correctCharsTyped / totalCharsTyped) * 100;
+
+  // Remplir le popup
+  document.getElementById("popup-total").textContent = totalTyped;
+  document.getElementById("popup-correct").textContent = correctTyped;
+  document.getElementById("popup-wrong").textContent = wrongTyped;
+  document.getElementById("popup-wpm").textContent = isFinite(finalWpm) ? Math.round(finalWpm) : 0;
+  document.getElementById("popup-accuracy").textContent = isFinite(finalAccuracy) ? Math.round(finalAccuracy) : 0;
+
+  document.getElementById("popup").classList.remove("hidden");
+
+  document.querySelector(".container").classList.remove("hidden");
+  gameArea.classList.add("hidden");
 }
 

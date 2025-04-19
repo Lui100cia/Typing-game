@@ -20,6 +20,20 @@
 <body>
   <div id="score-board">
     <button>Score</button>
+    <div id="popup" class="popup hidden">
+      <div class="popup-content">
+        <h2>Bravo 🎉</h2>
+        <p>Tu as terminé le test ! Voici tes résultats :</p>
+        <ul>
+          <li><strong>Mots tapés :</strong> <span id="popup-total"></span></li>
+          <li><strong>Mots corrects :</strong> <span id="popup-correct"></span></li>
+          <li><strong>Mots incorrects :</strong> <span id="popup-wrong"></span></li>
+          <li><strong>WPM (vitesse) :</strong> <span id="popup-wpm"></span></li>
+          <li><strong>Précision (lettres) :</strong> <span id="popup-accuracy"></span>%</li>
+        </ul>
+        <button onclick="location.reload()">Rejouer 🔄</button>
+      </div>
+    </div>
   </div>
 
 
