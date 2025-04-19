@@ -6,19 +6,18 @@
 
 body,
 html {
-  position: relative;
-  margin: 0;
-  padding: 0;
   height: 100%;
   font-family: 'Fredoka', sans-serif;
+  background: linear-gradient(135deg, #FFD3A5, #FD6585);
+  overflow: hidden;
 }
 
 .background {
-  background: linear-gradient(to top left, #FFB6C1, #81D4FA);
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  padding: 1rem;
 }
 
 .container {
@@ -28,13 +27,15 @@ html {
   text-align: center;
   width: 90%;
   max-width: 400px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 1s ease;
 }
 
 h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
   color: #FF4081;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 label {
@@ -42,6 +43,8 @@ label {
   margin-top: 1rem;
   font-size: 1.1rem;
   color: #444;
+  text-align: left;
+  padding-left: 10%;
 }
 
 input,
@@ -53,7 +56,13 @@ select {
   border: 2px solid #ccc;
   border-radius: 12px;
   outline: none;
-  background-color: #f9f9f9;
+  background-color: #fefefe;
+  transition: 0.2s;
+}
+
+input:focus,
+select:focus {
+  border-color: #FF4081;
 }
 
 button {
@@ -64,21 +73,23 @@ button {
   border: none;
   border-radius: 12px;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #FFA726;
+  transform: scale(1.05);
 }
 
 button#start-btn {
   margin-top: 2rem;
 }
 
-button:hover {
-  background-color: #FFA726;
-}
-
 #score-board {
   position: fixed;
   top: 8px;
   right: 8px;
+  z-index: 1000;
 }
 
 #score-board button {
@@ -96,21 +107,41 @@ button:hover {
 .game-area {
   padding: 2rem;
   text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .dashboard {
-  background-color: #FFF176;
+  background-color: transparent;
   border-radius: 15px;
   padding: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
   max-width: 768px;
-  margin-inline: auto;
 }
 
 .dashboard p {
   font-size: 1rem;
-  margin: 0.3rem 0;
+  margin: 0;
+  display: inline-flex;
+  gap: 4px;
+  align-items: baseline;
+  background-color: rgba(255,255,255,0.6);
+  padding: 0.8rem 1rem;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  white-space: nowrap;
+  flex: 0 1 auto;
+}
+
+.dashboard p::before {
+  content: attr(data-icon);
+  font-family: 'Segoe UI Symbol', 'Emoji', sans-serif;
+  font-size: 1.2rem;
 }
 
 .word-zone {
@@ -118,31 +149,55 @@ button:hover {
 }
 
 #word-display {
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-size: 1.7rem;
+  font-weight: 600;
   color: #333;
   margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  line-height: 2.2rem;
+  min-height: 3.5rem;
+  word-break: break-word;
+  white-space: normal;
 }
 
 #input-field {
-  width: 80%;
+  width: 85%;
   padding: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   border: 2px solid #ccc;
   border-radius: 10px;
+  outline: none;
+}
+
+#input-field:focus {
+  border-color: #4CAF50;
 }
 
 #word-display .highlight {
   color: #0071c2;
   font-weight: bold;
+  background-color: #e3f2fd;
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
 }
 
 #word-display .wrong {
   color: #ff0357;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
 }
 
 #word-display .correct {
   color: #00b000;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
 }
 
 .popup {
@@ -156,6 +211,7 @@ button:hover {
   align-items: center;
   justify-content: center;
   z-index: 999;
+  animation: fadeIn 0.5s ease;
 }
 
 .popup.hidden {
@@ -171,19 +227,24 @@ button:hover {
   width: 90%;
   box-shadow: 0 0 20px rgba(0,0,0,0.3);
   font-family: 'Comic Sans MS', cursive;
+  animation: popUp 0.3s ease-in-out;
 }
 
 .popup-content h2 {
   color: #4CAF50;
+  margin-bottom: 1rem;
 }
 
 .popup-content ul {
   text-align: left;
   margin: 1rem 0;
+  padding-left: 1.2rem;
+  list-style: square;
 }
 
 .popup-content li {
-  margin: 0.3rem 0;
+  margin: 0.4rem 0;
+  font-size: 1rem;
 }
 
 .popup-content button {
@@ -194,6 +255,11 @@ button:hover {
   font-size: 1rem;
   border-radius: 10px;
   cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.popup-content button:hover {
+  transform: scale(1.05);
 }
 
 #popup-gamer {
@@ -202,3 +268,12 @@ button:hover {
   color: #ff0357;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popUp {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

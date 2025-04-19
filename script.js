@@ -177,9 +177,6 @@ function endGame() {
   if (!best || score > best.score) {
     localStorage.setItem("best-score-" + currentLevel, JSON.stringify(result));
   }
-  
-  document.querySelector(".container").classList.remove("hidden");
-  gameArea.classList.add("hidden");
 }
 
 function showPopup(result, isGameOver = false) {
