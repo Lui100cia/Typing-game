@@ -7,13 +7,15 @@
   <script defer src="./script.js"></script>
   <title>Clavier Magique ✨</title>
 
-  <!-- Google Font enfantine -->
+
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome pour les icônes -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <!-- Feuille de style -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -36,7 +38,8 @@
           <li><strong>Précision (lettres) :</strong> <span id="popup-accuracy"></span>%</li>
 
           <li><strong>Score :</strong> <span id="popup-score"></span></li>
-          <li class="best"><strong>Score Max :</strong> <span id="popup-max-score"></span> (<span id="popup-best-gamer"></span>)</li>
+          <li class="best"><strong>Score Max :</strong> <span id="popup-max-score"></span> (<span
+              id="popup-best-gamer"></span>)</li>
         </ul>
         <button onclick="location.reload()">Rejouer 🔄</button>
       </div>
@@ -69,7 +72,7 @@
         <p><strong>🚀 Vitesse :</strong> <span id="wpm">0</span> WPM</p>
         <p><strong>🎯 Précision :</strong> <span id="accuracy">0</span>%</p>
       </div>
-    
+
       <div class="word-zone">
         <p id="word-display"></p>
         <input type="text" id="input-field" placeholder="Tape ici..." autofocus />
