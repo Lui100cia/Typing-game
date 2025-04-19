@@ -10,11 +10,15 @@ const timeRemaining = document.getElementById("time-remaining");
 const wpmDisplay = document.getElementById("wpm");
 const accuracyDisplay = document.getElementById("accuracy");
 
+const inputField = document.getElementById("input-field");
+
 let timer = 60;
 let intervalId;
 let currentWordIndex = 0;
 let totalTyped = 0;
 let correctTyped = 0;
+let totalCharsTyped = 0;
+let correctCharsTyped = 0;
 
 // ✅ Clique sur "Commencer"
 startBtn.addEventListener("click", () => {
@@ -36,9 +40,9 @@ startBtn.addEventListener("click", () => {
 });
 
 const words = {
-    easy: ["apple", "banana", "grape", "orange", "cherry"],
-    medium: ["keyboard", "monitor", "printer", "charger", "battery"],
-    hard: ["synchronize", "complicated", "development", "extravagant", "misconception"]
+  easy: ["apple", "banana", "grape", "orange", "cherry"],
+  medium: ["keyboard", "monitor", "printer", "charger", "battery"],
+  hard: ["synchronize", "complicated", "development", "extravagant", "misconception"]
 };
 
 const wordDisplay = document.getElementById("word-display");
@@ -62,6 +66,7 @@ function startGame(level) {
   wpmDisplay.textContent = "0";
   accuracyDisplay.textContent = "0";
 
+  inputField.focus()
 }
 
 function displayWords() {
@@ -89,20 +94,16 @@ function startCountdown() {
   }, 1000);
 }
 
-const inputField = document.getElementById("input-field");
-
 inputField.addEventListener("keydown", (e) => {
-
+  const typed = inputField.value.trim();
+  const target = generatedWords[currentWordIndex];
 
   if (e.key === " ") {
     e.preventDefault(); // Empêche d’écrire l’espace
 
-    const typedWord = inputField.value.trim();
-    const targetWord = generatedWords[currentWordIndex];
-
     totalTyped++;
 
-    if (typedWord === targetWord) {
+    if (typed === target) {
       correctTyped++;
       wordDisplay.querySelector(`.highlight`).classList.add("correct")
     } else {
@@ -113,8 +114,16 @@ inputField.addEventListener("keydown", (e) => {
     inputField.value = "";
 
     updateWordHighlight();
-    updateStats();
+  } else {
+    totalCharsTyped++;
+    const correctSoFar = target.startsWith(typed);
+
+    if (correctSoFar) {
+      correctCharsTyped++;
+    }
   }
+  updateStats();
+
 });
 
 function updateWordHighlight() {
@@ -130,8 +139,8 @@ function updateWordHighlight() {
 
 function updateStats() {
   const minutesElapsed = (60 - parseInt(timeRemaining.textContent)) / 60;
-  const wpm = correctTyped / minutesElapsed;
-  const accuracy = (correctTyped / totalTyped) * 100;
+  const wpm = totalTyped / minutesElapsed;
+  const accuracy = (correctCharsTyped / totalCharsTyped) * 100;
 
   wpmDisplay.textContent = isFinite(wpm) ? Math.round(wpm) : 0;
   accuracyDisplay.textContent = isFinite(accuracy) ? Math.round(accuracy) : 0;
