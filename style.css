@@ -87,5 +87,46 @@ button:hover {
 
 #score-board button:hover {
   background-color: #ff0357;
-
 }
+
+.hidden {
+  display: none;
+}
+
+.game-area {
+  padding: 2rem;
+  text-align: center;
+}
+
+.dashboard {
+  background-color: #FFF176;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.dashboard p {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+}
+
+.word-zone {
+  margin-top: 1rem;
+}
+
+#word-display {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+#input-field {
+  width: 80%;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+}
+

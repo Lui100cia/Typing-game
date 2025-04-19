@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script defer src="./script.js"></script>
   <title>Clavier Magique ✨</title>
 
   <!-- Google Font enfantine -->
@@ -37,6 +38,21 @@
       </select>
 
       <button id="start-btn"><i class="fas fa-play"></i> Commencer</button>
+    </div>
+
+    <div class="game-area hidden" id="game-area">
+      <div class="dashboard">
+        <p><strong>👧 Prénom :</strong> <span id="player-name"></span></p>
+        <p><strong>🎮 Niveau :</strong> <span id="player-level"></span></p>
+        <p><strong>⏱ Temps :</strong> <span id="time-remaining">60</span>s</p>
+        <p><strong>🚀 Vitesse :</strong> <span id="wpm">0</span> WPM</p>
+        <p><strong>🎯 Précision :</strong> <span id="accuracy">0</span>%</p>
+      </div>
+    
+      <div class="word-zone">
+        <p id="word-display"></p>
+        <input type="text" id="input-field" placeholder="Tape ici..." autofocus />
+      </div>
     </div>
   </div>
 
