@@ -37,7 +37,8 @@ const nbWords = {
   hard: 75
 }
 
-startBtn.addEventListener("click", () => {
+document.querySelector(".container").addEventListener("submit", (e) => {
+  e.preventDefault()
   const name = usernameInput.value.trim();
   const level = modeSelect.value;
   if (!name) return alert("Entre ton prénom 😊");
