@@ -32,9 +32,9 @@ const words = {
 };
 
 const nbWords = {
-  easy: 30,
-  medium: 50,
-  hard: 75
+  easy: 20,
+  medium: 25,
+  hard: 30
 }
 
 document.querySelector(".container").addEventListener("submit", (e) => {
