@@ -1,4 +1,3 @@
-const startBtn = document.getElementById("start-btn");
 const usernameInput = document.getElementById("username");
 const modeSelect = document.getElementById("mode-select");
 const gameArea = document.getElementById("game-area");
@@ -10,6 +9,7 @@ const accuracyDisplay = document.getElementById("accuracy");
 const inputField = document.getElementById("input-field");
 const wordDisplay = document.getElementById("word-display");
 const scoreButton = document.querySelector("#score-board button");
+const countdownEl = document.getElementById("countdown");
 
 const TIMING = 120;
 
@@ -39,17 +39,34 @@ const nbWords = {
 
 document.querySelector(".container").addEventListener("submit", (e) => {
   e.preventDefault()
+  let counter = 3;
   const name = usernameInput.value.trim();
   const level = modeSelect.value;
+
   if (!name) return alert("Entre ton prénom 😊");
 
   currentLevel = level;
-  document.querySelector(".container").classList.add("hidden");
-  gameArea.classList.remove("hidden");
 
-  playerName.textContent = name;
-  playerLevel.textContent = level;
-  startGame(level);
+  countdownEl.textContent = counter;
+  document.getElementById("countdown-container").classList.remove("hidden");
+
+  const countdownInterval = setInterval(() => {
+    counter--;
+    if (counter === 0) {
+      clearInterval(countdownInterval);
+      playerName.textContent = name;
+      playerLevel.textContent = level;
+      document.getElementById("countdown-container").classList.add("hidden");
+      setTimeout(() => {
+        document.querySelector(".container").classList.add("hidden");
+        gameArea.classList.remove("hidden");
+
+        startGame(level);
+      }, 100)
+    } else {
+      countdownEl.textContent = counter;
+    }
+  }, 1000);
 });
 
 function startGame(level) {
@@ -158,7 +175,7 @@ function endGame() {
     (parseInt(timeRemaining.textContent))
   );
 
-  
+
 
   const result = {
     gamer: usernameInput.value.trim(),

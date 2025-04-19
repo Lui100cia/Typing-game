@@ -268,6 +268,34 @@ button#start-btn {
   color: #ff0357;
 }
 
+#countdown-container {
+  width: 100vw;
+  height: 100dvh;
+  background-color: #111010a2;
+  backdrop-filter: blur(2px);
+  position: fixed;
+  inset: 0;
+}
+
+#countdown {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+  z-index: 1001;
+  animation: countdownAnim 1s ease-in-out infinite;
+}
+
+@keyframes countdownAnim {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+}
+
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
