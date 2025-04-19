@@ -9,6 +9,7 @@ html {
   height: 100%;
   font-family: 'Comic Sans MS', sans-serif;
   background-image: url(asset/Soft\ cloud\ bg.png);
+  color: #5a48a2;
   overflow: hidden;
 }
 
@@ -21,7 +22,6 @@ html {
 }
 
 .container {
-  background-color: #ffffffee;
   border-radius: 20px;
   padding: 2rem;
   text-align: center;
@@ -29,12 +29,14 @@ html {
   max-width: 400px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   animation: fadeIn 1s ease;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 20px rgba(207, 131, 131, 0.1);
 }
 
 h1 {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
-  color: #FF4081;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
@@ -42,7 +44,7 @@ label {
   display: block;
   margin-top: 1rem;
   font-size: 1.1rem;
-  color: #444;
+  color:  #5a48a2;
   text-align: left;
   padding-left: 10%;
 }
@@ -53,7 +55,7 @@ select {
   padding: 0.8rem;
   margin-top: 0.3rem;
   font-size: 1rem;
-  border: 2px solid #ccc;
+  border: 2px solid #c3b1ff;
   border-radius: 12px;
   outline: none;
   background-color: #fefefe;
@@ -62,22 +64,28 @@ select {
 
 input:focus,
 select:focus {
-  border-color: #FF4081;
+  border-color:  #5a48a2;
 }
 
 button {
   padding: 1rem 2rem;
   font-size: 1.1rem;
-  background-color: #FFB74D;
-  color: white;
+  background-color:  #fde9f7;
+  color: #5a48a2;
   border: none;
   border-radius: 12px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
 
+.svg {
+  width: 45px;
+  height: 45px;;
+}
+
 button:hover {
-  background-color: #FFA726;
+  background-color: #a894f4;
   transform: scale(1.05);
 }
 
@@ -93,11 +101,11 @@ button#start-btn {
 }
 
 #score-board button {
-  background-color: #FF4081;
+  background-color: #fde9f7;
 }
 
 #score-board button:hover {
-  background-color: #ff0357;
+  background-color: #afa0e5;
 }
 
 .hidden {
@@ -109,11 +117,11 @@ button#start-btn {
   text-align: center;
   max-width: 800px;
   margin: 0 auto;
-  background-color: #ffffffee;
+  background-color: #ffffff8f;
   border-radius: 20px;
   padding: 2rem;
   text-align: center;
-  width: 90%;
+  width: 70%;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   animation: fadeIn 1s ease;
 }
@@ -137,7 +145,7 @@ button#start-btn {
   display: inline-flex;
   gap: 4px;
   align-items: baseline;
-  background-color: rgba(255,255,255,0.6);
+  background-color: #fde9f7;
   padding: 0.8rem 1rem;
   border-radius: 15px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -152,26 +160,29 @@ button#start-btn {
 }
 
 .word-zone {
-  margin-top: 1rem;
+  margin-top: 10px;
 }
 
 #word-display {
-  font-size: 1.7rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: #333;
-  margin-bottom: 1rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
+  align-items: center; 
   line-height: 2.2rem;
-  min-height: 3.5rem;
   word-break: break-word;
   white-space: normal;
+  width: 100%; 
+  height: 100%; 
+  box-sizing: border-box; 
 }
 
 #input-field {
-  width: 85%;
+  width: 50%;
+  height: 40px;
   padding: 1rem;
   font-size: 1.3rem;
   border: 2px solid #ccc;
@@ -180,19 +191,19 @@ button#start-btn {
 }
 
 #input-field:focus {
-  border-color: #4CAF50;
+  border-color: #5a48a2;
 }
 
 #word-display .highlight {
   color: #0071c2;
   font-weight: bold;
-  background-color: #e3f2fd;
+  background-color: #90c4e9;
   padding: 0.2rem 0.4rem;
   border-radius: 5px;
 }
 
 #word-display .wrong {
-  color: #ff0357;
+  color: #ff0000;
   font-weight: bold;
   text-decoration: none;
   padding: 0.2rem 0.4rem;
@@ -200,7 +211,7 @@ button#start-btn {
 }
 
 #word-display .correct {
-  color: #00b000;
+  color: #5a48a2;
   font-weight: bold;
   text-decoration: none;
   padding: 0.2rem 0.4rem;
@@ -238,7 +249,7 @@ button#start-btn {
 }
 
 .popup-content h2 {
-  color: #4CAF50;
+  color: #fdaedc;
   margin-bottom: 1rem;
 }
 
@@ -247,6 +258,7 @@ button#start-btn {
   margin: 1rem 0;
   padding-left: 1.2rem;
   list-style: square;
+  color: #0071c2;
 }
 
 .popup-content li {
@@ -255,8 +267,8 @@ button#start-btn {
 }
 
 .popup-content button {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #f8cae7;
+  color: #5a48a2;
   border: none;
   padding: 0.7rem 1.5rem;
   font-size: 1rem;
@@ -272,7 +284,7 @@ button#start-btn {
 #popup-gamer {
   font-weight: bold;
   font-size: 1.25rem;
-  color: #ff0357;
+  color: #0071c2;
 }
 
 #countdown-container {
@@ -302,7 +314,7 @@ button#start-btn {
   width: 80%;
   max-width: 400px;
   margin: 30px auto 50px;
-  background: #896aee;
+  background: #ccc4e7;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
