@@ -12,6 +12,9 @@ const accuracyDisplay = document.getElementById("accuracy");
 
 let timer = 60;
 let intervalId;
+let currentWordIndex = 0;
+let totalTyped = 0;
+let correctTyped = 0;
 
 // ✅ Clique sur "Commencer"
 startBtn.addEventListener("click", () => {
@@ -52,6 +55,13 @@ function startGame(level) {
 
   displayWords();
   startCountdown();
+  currentWordIndex = 0;
+  totalTyped = 0;
+  correctTyped = 0;
+  document.getElementById("input-field").value = "";
+  wpmDisplay.textContent = "0";
+  accuracyDisplay.textContent = "0";
+
 }
 
 function displayWords() {
@@ -78,3 +88,52 @@ function startCountdown() {
     }
   }, 1000);
 }
+
+const inputField = document.getElementById("input-field");
+
+inputField.addEventListener("keydown", (e) => {
+
+
+  if (e.key === " ") {
+    e.preventDefault(); // Empêche d’écrire l’espace
+
+    const typedWord = inputField.value.trim();
+    const targetWord = generatedWords[currentWordIndex];
+
+    totalTyped++;
+
+    if (typedWord === targetWord) {
+      correctTyped++;
+      wordDisplay.querySelector(`.highlight`).classList.add("correct")
+    } else {
+      wordDisplay.querySelector(`.highlight`).classList.add("wrong")
+    }
+
+    currentWordIndex++;
+    inputField.value = "";
+
+    updateWordHighlight();
+    updateStats();
+  }
+});
+
+function updateWordHighlight() {
+  const spans = wordDisplay.querySelectorAll("span");
+
+  spans.forEach((span, index) => {
+    span.classList.remove("highlight");
+    if (index === currentWordIndex) {
+      span.classList.add("highlight");
+    }
+  });
+}
+
+function updateStats() {
+  const minutesElapsed = (60 - parseInt(timeRemaining.textContent)) / 60;
+  const wpm = correctTyped / minutesElapsed;
+  const accuracy = (correctTyped / totalTyped) * 100;
+
+  wpmDisplay.textContent = isFinite(wpm) ? Math.round(wpm) : 0;
+  accuracyDisplay.textContent = isFinite(accuracy) ? Math.round(accuracy) : 0;
+}
+
