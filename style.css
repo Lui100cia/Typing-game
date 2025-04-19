@@ -196,3 +196,9 @@ button:hover {
   cursor: pointer;
 }
 
+#popup-gamer {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: #ff0357;
+}
+

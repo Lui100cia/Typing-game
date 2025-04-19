@@ -1,19 +1,18 @@
 const startBtn = document.getElementById("start-btn");
 const usernameInput = document.getElementById("username");
 const modeSelect = document.getElementById("mode-select");
-
 const gameArea = document.getElementById("game-area");
 const playerName = document.getElementById("player-name");
 const playerLevel = document.getElementById("player-level");
-
 const timeRemaining = document.getElementById("time-remaining");
 const wpmDisplay = document.getElementById("wpm");
 const accuracyDisplay = document.getElementById("accuracy");
-
 const inputField = document.getElementById("input-field");
+const wordDisplay = document.getElementById("word-display");
+const scoreButton = document.querySelector("#score-board button");
 
-const NUMBER_OF_WORD = 50;
 const TIMING = 120;
+
 let timer = TIMING;
 let intervalId;
 let currentWordIndex = 0;
@@ -22,26 +21,9 @@ let correctTyped = 0;
 let wrongTyped = 0;
 let totalCharsTyped = 0;
 let correctCharsTyped = 0;
-const wpmList = [];
-
-// ✅ Clique sur "Commencer"
-startBtn.addEventListener("click", () => {
-  const name = usernameInput.value.trim();
-  const level = modeSelect.value;
-
-  if (name === "") {
-    alert("Entre ton prénom 😊");
-    return;
-  }
-
-  document.querySelector(".container").classList.add("hidden");
-  gameArea.classList.remove("hidden");
-
-  playerName.textContent = name;
-  playerLevel.textContent = level;
-
-  startGame(level);
-});
+let wpmList = [];
+let currentLevel = "";
+let generatedWords = [];
 
 const words = {
   easy: ["apple", "banana", "grape", "orange", "cherry"],
@@ -49,28 +31,36 @@ const words = {
   hard: ["synchronize", "complicated", "development", "extravagant", "misconception"]
 };
 
-const wordDisplay = document.getElementById("word-display");
-let generatedWords = [];
+const nbWords = {
+  easy: 30,
+  medium: 50,
+  hard: 75
+}
+
+startBtn.addEventListener("click", () => {
+  const name = usernameInput.value.trim();
+  const level = modeSelect.value;
+  if (!name) return alert("Entre ton prénom 😊");
+
+  currentLevel = level;
+  document.querySelector(".container").classList.add("hidden");
+  gameArea.classList.remove("hidden");
+
+  playerName.textContent = name;
+  playerLevel.textContent = level;
+  startGame(level);
+});
 
 function startGame(level) {
-  // Génère 50 mots aléatoires selon le niveau
-  generatedWords = [];
-  for (let i = 0; i < NUMBER_OF_WORD; i++) {
-    const wordList = words[level];
-    const randomWord = wordList[Math.floor(Math.random() * wordList.length)];
-    generatedWords.push(randomWord);
-  }
+  generatedWords = Array.from({ length: nbWords[level] }, () => {
+    const list = words[level];
+    return list[Math.floor(Math.random() * list.length)];
+  });
 
   displayWords();
   startCountdown();
-  currentWordIndex = 0;
-  totalTyped = 0;
-  correctTyped = 0;
-  document.getElementById("input-field").value = "";
-  wpmDisplay.textContent = "0";
-  accuracyDisplay.textContent = "0";
-
-  inputField.focus()
+  resetStats();
+  inputField.focus();
 }
 
 function displayWords() {
@@ -90,7 +80,6 @@ function startCountdown() {
   intervalId = setInterval(() => {
     timeLeft--;
     timeRemaining.textContent = timeLeft;
-
     if (timeLeft <= 0) {
       clearInterval(intervalId);
       endGame();
@@ -98,60 +87,56 @@ function startCountdown() {
   }, 1000);
 }
 
+function resetStats() {
+  currentWordIndex = totalTyped = correctTyped = wrongTyped = totalCharsTyped = correctCharsTyped = 0;
+  wpmList = [];
+  inputField.value = "";
+  inputField.disabled = false;
+  wpmDisplay.textContent = "0";
+  accuracyDisplay.textContent = "0";
+}
+
 inputField.addEventListener("keydown", (e) => {
   const typed = inputField.value.trim();
   const target = generatedWords[currentWordIndex];
 
   if (e.key === " ") {
-    e.preventDefault(); // Empêche d’écrire l’espace
-
+    e.preventDefault();
     totalTyped++;
-
+    const span = wordDisplay.querySelectorAll("span")[currentWordIndex];
     if (typed === target) {
       correctTyped++;
-      wordDisplay.querySelector(`.highlight`).classList.add("correct")
+      span.classList.add("correct");
     } else {
       wrongTyped++;
-      wordDisplay.querySelector(`.highlight`).classList.add("wrong")
+      span.classList.add("wrong");
     }
-
     currentWordIndex++;
     inputField.value = "";
-
     updateWordHighlight();
   } else {
     totalCharsTyped++;
-    const correctSoFar = target.startsWith(typed);
-
-    if (correctSoFar) {
-      correctCharsTyped++;
-    }
+    if (target.startsWith(typed)) correctCharsTyped++;
   }
+
   updateStats();
-
-
   if (currentWordIndex >= generatedWords.length) {
     clearInterval(intervalId);
     endGame();
-    return;
   }
 });
 
 function updateWordHighlight() {
   const spans = wordDisplay.querySelectorAll("span");
-
   spans.forEach((span, index) => {
-    span.classList.remove("highlight");
-    if (index === currentWordIndex) {
-      span.classList.add("highlight");
-    }
+    span.classList.toggle("highlight", index === currentWordIndex);
   });
 }
 
 function updateStats() {
   const minutesElapsed = (TIMING - parseInt(timeRemaining.textContent)) / 60;
   const wpm = totalTyped / minutesElapsed;
-  wpmList.push(wpm)
+  wpmList.push(wpm);
   const meanWpm = wpmList.reduce((a, b) => a + b) / wpmList.length;
   const accuracy = (correctCharsTyped / totalCharsTyped) * 100;
 
@@ -165,17 +150,63 @@ function endGame() {
 
   const finalWpm = parseInt(wpmDisplay.textContent);
   const finalAccuracy = (correctCharsTyped / totalCharsTyped) * 100;
+  const score = Math.round(
+    (correctTyped * 4) +
+    (finalWpm * 2) +
+    (finalAccuracy * 3) +
+    (parseInt(timeRemaining.textContent))
+  );
 
-  // Remplir le popup
-  document.getElementById("popup-total").textContent = totalTyped;
-  document.getElementById("popup-correct").textContent = correctTyped;
-  document.getElementById("popup-wrong").textContent = wrongTyped;
-  document.getElementById("popup-wpm").textContent = isFinite(finalWpm) ? Math.round(finalWpm) : 0;
-  document.getElementById("popup-accuracy").textContent = isFinite(finalAccuracy) ? Math.round(finalAccuracy) : 0;
+  
 
-  document.getElementById("popup").classList.remove("hidden");
+  const result = {
+    gamer: usernameInput.value.trim(),
+    level: currentLevel,
+    timeLeft: TIMING - parseInt(timeRemaining.textContent),
+    total: totalTyped,
+    correct: correctTyped,
+    wrong: wrongTyped,
+    wpm: finalWpm,
+    accuracy: isFinite(finalAccuracy) ? Math.round(finalAccuracy) : 0,
+    score
+  };
 
+  showPopup(result, true);
+
+  const best = JSON.parse(localStorage.getItem("best-score-" + currentLevel)) || null;
+  if (!best || score > best.score) {
+    localStorage.setItem("best-score-" + currentLevel, JSON.stringify(result));
+  }
+  
   document.querySelector(".container").classList.remove("hidden");
   gameArea.classList.add("hidden");
 }
 
+function showPopup(result, isGameOver = false) {
+  document.getElementById("popup-time").textContent = result.timeLeft || "—";
+  document.getElementById("popup-gamer").textContent = result.gamer || "—";
+  document.getElementById("popup-total").textContent = `${result.total || 0}/${nbWords[modeSelect.value]}`;
+  document.getElementById("popup-correct").textContent = result.correct || 0;
+  document.getElementById("popup-wrong").textContent = result.wrong || 0;
+  document.getElementById("popup-wpm").textContent = result.wpm || 0;
+  document.getElementById("popup-accuracy").textContent = result.accuracy || 0;
+  document.getElementById("popup-score").textContent = result.score || 0;
+
+  const best = JSON.parse(localStorage.getItem("best-score-" + result.level));
+  if (best && isGameOver) {
+    document.querySelector("#popup li.best").classList.remove("hidden");
+    document.getElementById("popup-max-score").textContent = best.score;
+    document.getElementById("popup-best-gamer").textContent = best.gamer;
+  } else {
+    document.querySelector("#popup li.best").classList.add("hidden");
+  }
+
+  document.getElementById("popup").classList.remove("hidden");
+}
+
+scoreButton.addEventListener("click", () => {
+  const level = modeSelect.value;
+  const best = JSON.parse(localStorage.getItem("best-score-" + level));
+  if (!best) return alert("Aucun score enregistré pour ce niveau.");
+  showPopup(best, false);
+});

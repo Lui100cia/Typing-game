@@ -11,7 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
 
   <!-- Font Awesome pour les icônes -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Feuille de style -->
   <link rel="stylesheet" href="style.css" />
@@ -19,17 +19,20 @@
 
 <body>
   <div id="score-board">
-    <button>Score</button>
+    <button><i class="fas fa-star"></i> Meilleur Score</button>
     <div id="popup" class="popup hidden">
       <div class="popup-content">
-        <h2>Bravo 🎉</h2>
-        <p>Tu as terminé le test ! Voici tes résultats :</p>
+        <h2>Bravo <span id="popup-gamer"></span> 🎉</h2>
+        <p>Tu as terminé le test en <span id="popup-time"></span> sécondes ! Voici tes résultats :</p>
         <ul>
           <li><strong>Mots tapés :</strong> <span id="popup-total"></span></li>
           <li><strong>Mots corrects :</strong> <span id="popup-correct"></span></li>
           <li><strong>Mots incorrects :</strong> <span id="popup-wrong"></span></li>
           <li><strong>WPM (vitesse) :</strong> <span id="popup-wpm"></span></li>
           <li><strong>Précision (lettres) :</strong> <span id="popup-accuracy"></span>%</li>
+
+          <li><strong>Score :</strong> <span id="popup-score"></span></li>
+          <li class="best"><strong>Score Max :</strong> <span id="popup-max-score"></span> (<span id="popup-best-gamer"></span>)</li>
         </ul>
         <button onclick="location.reload()">Rejouer 🔄</button>
       </div>
